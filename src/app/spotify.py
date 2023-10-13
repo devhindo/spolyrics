@@ -1,13 +1,15 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from env import CLIENT_ID
+from env import CLIENT_ID, CLIENT_SECRET
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
-                                               client_secret="YOUR_APP_CLIENT_SECRET",
-                                               redirect_uri="YOUR_APP_REDIRECT_URI",
-                                               scope="user-library-read"))
 
-results = sp.current_user_saved_tracks()
-for idx, item in enumerate(results['items']):
-    track = item['track']
-    print(idx, track['artists'][0]['name'], " – ", track['name'])
+def auth():
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
+                                                   client_secret=CLIENT_SECRET,
+                                                   redirect_uri="https://github.com/devhindo/spolyrics",
+                                                   scope="user-library-read"))
+    
+    results = sp.current_user_saved_tracks()
+    for idx, item in enumerate(results['items']):
+        track = item['track']
+        print(idx, track['artists'][0]['name'], " – ", track['name'])
